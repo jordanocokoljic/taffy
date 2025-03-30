@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import software.nofrills.taffy.core.Base64Charset;
 import software.nofrills.taffy.core.Step;
+import software.nofrills.taffy.core.steps.DecodeBase64;
 import software.nofrills.taffy.core.steps.EncodeBase64;
 import software.nofrills.taffy.core.steps.InText;
 import software.nofrills.taffy.core.steps.OutStdout;
@@ -81,6 +82,15 @@ public class MixinsTests {
                 """
                 {
                     "do": "encode:base64",
+                    "charset": "std-raw"
+                }
+                """
+            ),
+            Arguments.of(
+                DecodeBase64.class,
+                """
+                {
+                    "do": "decode:base64",
                     "charset": "std-raw"
                 }
                 """

@@ -12,22 +12,35 @@ import software.nofrills.taffy.core.ContextHelper;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EncodeBase64Tests {
-    @ParameterizedTest
-    @MethodSource("applyTestCases")
-    public void applyEncodesAndPushesToStack(Base64Charset charset, String expected) {
+public class Base64Tests {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("testCases")
+    public void encodePushesCorrectValueToContext(Base64Charset charset, String expected) {
         Context context = new Context(null);
-        context.push(testInput());
+        context.push(source());
 
         EncodeBase64 b64 = new EncodeBase64(charset);
         b64.apply(context);
 
-        Assertions.assertEquals(expected, ContextHelper.popUTF8(context));
+        assertEquals(expected, ContextHelper.popUTF8(context));
     }
 
-    private static byte[] testInput() {
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("testCases")
+    public void decodePushesCorrectValueToContext(Base64Charset charset, String raw) {
+        Context context = new Context(null);
+        ContextHelper.pushUTF8(context, raw);
+
+        DecodeBase64 b64 = new DecodeBase64(charset);
+        b64.apply(context);
+
+        assertArrayEquals(source(), context.pop());
+    }
+
+    private static byte[] source() {
         try {
             return Hex.decodeHex("6a5a6169b7adfb");
         } catch (DecoderException e) {
@@ -35,7 +48,7 @@ public class EncodeBase64Tests {
         }
     }
 
-    private static Stream<Arguments> applyTestCases() {
+    private static Stream<Arguments> testCases() {
         return Stream.of(
             Arguments.of(Base64Charset.STD_PADDED, "alphabet+w=="),
             Arguments.of(Base64Charset.STD_RAW, "alphabet+w"),

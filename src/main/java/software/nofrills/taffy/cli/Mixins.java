@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import software.nofrills.taffy.core.Base64Charset;
+import software.nofrills.taffy.core.steps.DecodeBase64;
 import software.nofrills.taffy.core.steps.EncodeBase64;
 import software.nofrills.taffy.core.steps.InText;
 import software.nofrills.taffy.core.steps.OutStdout;
@@ -26,6 +27,7 @@ final class Mixins {
         mapper.addMixIn(Step.class, StepMixin.class);
         mapper.addMixIn(InText.class, InTextMixin.class);
         mapper.addMixIn(EncodeBase64.class, EncodeBase64Mixin.class);
+        mapper.addMixIn(DecodeBase64.class, DecodeBase64Mixin.class);
     }
 }
 
@@ -37,7 +39,8 @@ final class Mixins {
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "in:text", value = InText.class),
         @JsonSubTypes.Type(name = "out:stdout", value = OutStdout.class),
-        @JsonSubTypes.Type(name = "encode:base64", value = EncodeBase64.class)
+        @JsonSubTypes.Type(name = "encode:base64", value = EncodeBase64.class),
+        @JsonSubTypes.Type(name = "decode:base64", value = DecodeBase64.class)
 })
 interface StepMixin {
 }
@@ -69,3 +72,8 @@ abstract class EncodeBase64Mixin extends EncodeBase64 {
     }
 }
 
+abstract class DecodeBase64Mixin extends DecodeBase64 {
+    public DecodeBase64Mixin(@JsonProperty("charset") Base64Charset charset) {
+        super(charset);
+    }
+}
