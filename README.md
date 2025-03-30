@@ -35,3 +35,7 @@ Taffy supports a variety of steps, each of which will push or pop values on and 
 | `encode:hex`    | None                                                      | Takes the value on the top of the stack, encodes it as a hexadecimal string, pushing the result back onto the stack.       |
 | `encode:base64` | `charset: std-padded \| std-raw \| url-padded \| url-raw` | Takes the value on the top of the stack, encodes it with the given base64 alphabet, pushing the result back onto the stack |
 | `out:stdout`    | None                                                      | Takes the value on the top of the stack, writing it to standard out.                                                       |
+
+
+## Building
+To build Taffy locally, clone the repository, and run `mvn package`.
