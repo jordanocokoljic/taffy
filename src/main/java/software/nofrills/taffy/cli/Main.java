@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.apache.commons.io.FilenameUtils;
-import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Runner;
 import software.nofrills.taffy.core.Step;
 

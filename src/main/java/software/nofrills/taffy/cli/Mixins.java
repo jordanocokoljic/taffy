@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import software.nofrills.taffy.core.Base64Charset;
-import software.nofrills.taffy.core.steps.*;
 import software.nofrills.taffy.core.Step;
+import software.nofrills.taffy.core.steps.*;
 
 import java.io.IOException;
 

@@ -1,6 +1,5 @@
 package software.nofrills.taffy.core.steps;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.ContextHelper;
