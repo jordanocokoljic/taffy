@@ -2,6 +2,7 @@ package software.nofrills.taffy.cli;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.apache.commons.io.FilenameUtils;
 import software.nofrills.taffy.core.Context;
@@ -31,15 +32,18 @@ public class Main {
                 try {
                     Step[] recipe = mapper.readValue(p.toFile(), new TypeReference<>() {});
                     recipes.put(FilenameUtils.removeExtension(p.getFileName().toString()), recipe);
+                } catch (InvalidTypeIdException e) {
+                    System.err.printf("recipe (%s) contained unrecognized step: %s", p, e.getTypeId());
+                    System.exit(1);
                 } catch (IOException e) {
-                    System.err.printf("A fatal error occurred when trying to load recipe %s: %s", p, e.getMessage());
+                    System.err.printf("a fatal error occurred when trying to load recipe %s: %s", p, e);
                     System.exit(1);
                 }
             });
         }
         catch (NoSuchFileException ignored) {}
         catch (IOException e) {
-            System.err.printf("A fatal error occurred when trying to load local recipes: %s", e);
+            System.err.printf("a fatal error occurred when trying to load local recipes: %s", e);
             System.exit(1);
         }
 
