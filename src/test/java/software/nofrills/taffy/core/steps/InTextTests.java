@@ -1,6 +1,5 @@
 package software.nofrills.taffy.core.steps;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.ContextHelper;
@@ -15,6 +14,6 @@ public class InTextTests {
 
         text.apply(context);
 
-        Assertions.assertEquals("Hello, world", ContextHelper.popUTF8(context));
+        assertEquals("Hello, world", ContextHelper.popUTF8(context));
     }
 }
