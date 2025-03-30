@@ -10,7 +10,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "in:text", value = software.nofrills.taffy.core.in.Text.class),
-        @JsonSubTypes.Type(name = "out:stdout", value = software.nofrills.taffy.core.out.Stdout.class)
+        @JsonSubTypes.Type(name = "out:stdout", value = software.nofrills.taffy.core.out.Stdout.class),
+        @JsonSubTypes.Type(name = "encode:base64", value = software.nofrills.taffy.core.encode.Base64.class)
 })
 public interface Step {
     void apply(Context context);
