@@ -10,10 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import software.nofrills.taffy.core.Base64Charset;
-import software.nofrills.taffy.core.steps.DecodeBase64;
-import software.nofrills.taffy.core.steps.EncodeBase64;
-import software.nofrills.taffy.core.steps.InText;
-import software.nofrills.taffy.core.steps.OutStdout;
+import software.nofrills.taffy.core.steps.*;
 import software.nofrills.taffy.core.Step;
 
 import java.io.IOException;
@@ -40,7 +37,9 @@ final class Mixins {
         @JsonSubTypes.Type(name = "in:text", value = InText.class),
         @JsonSubTypes.Type(name = "out:stdout", value = OutStdout.class),
         @JsonSubTypes.Type(name = "encode:base64", value = EncodeBase64.class),
-        @JsonSubTypes.Type(name = "decode:base64", value = DecodeBase64.class)
+        @JsonSubTypes.Type(name = "encode:hex", value = EncodeHex.class),
+        @JsonSubTypes.Type(name = "decode:base64", value = DecodeBase64.class),
+        @JsonSubTypes.Type(name = "decode:hex", value = DecodeHex.class)
 })
 interface StepMixin {
 }

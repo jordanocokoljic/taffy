@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.apache.commons.io.FilenameUtils;
 import software.nofrills.taffy.core.Context;
+import software.nofrills.taffy.core.Runner;
 import software.nofrills.taffy.core.Step;
 
 import java.io.IOException;
@@ -38,9 +39,11 @@ public class Main {
             System.exit(1);
         }
 
-        Context context = new Context(System.out);
-        for (var step : matched) {
-            step.apply(context);
+        Runner runner = new Runner(matched);
+        boolean ok = runner.run(System.out, System.err);
+
+        if (!ok) {
+            System.exit(1);
         }
     }
 
