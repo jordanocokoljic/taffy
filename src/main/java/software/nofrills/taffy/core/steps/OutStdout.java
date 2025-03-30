@@ -1,11 +1,11 @@
-package software.nofrills.taffy.core.out;
+package software.nofrills.taffy.core.steps;
 
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Step;
 
 import java.nio.charset.StandardCharsets;
 
-public class Stdout implements Step {
+public class OutStdout implements Step {
     @Override
     public void apply(Context context) {
         try (var out = context.out()) {

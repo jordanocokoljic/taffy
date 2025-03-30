@@ -68,6 +68,7 @@ public class Main {
         }
 
         ObjectMapper mapper = new YAMLMapper();
+        Mixins.applyTo(mapper);
 
         try (var paths = Files.walk(dir)) {
             paths.skip(1).forEach(p -> {

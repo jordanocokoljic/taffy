@@ -1,4 +1,4 @@
-package software.nofrills.taffy.core.out;
+package software.nofrills.taffy.core.steps;
 
 import org.junit.jupiter.api.Test;
 import software.nofrills.taffy.core.Context;
@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StdoutTests {
+public class OutStdoutTests {
     @Test
     public void applyWritesToContextOut() {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -19,8 +19,8 @@ public class StdoutTests {
         String message = "Hello, world";
         context.push(message.getBytes(StandardCharsets.UTF_8));
 
-        Stdout stdout = new Stdout();
-        stdout.apply(context);
+        OutStdout outStdout = new OutStdout();
+        outStdout.apply(context);
 
         assertEquals(message + System.lineSeparator(), bytes.toString());
     }

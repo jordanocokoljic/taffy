@@ -1,15 +1,14 @@
-package software.nofrills.taffy.core.in;
+package software.nofrills.taffy.core.steps;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Step;
 
 import java.nio.charset.StandardCharsets;
 
-public class Text implements Step {
+public class InText implements Step {
     private final String text;
 
-    public Text(@JsonProperty("text") String text) {
+    public InText(String text) {
         this.text = text;
     }
 

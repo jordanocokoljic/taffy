@@ -1,20 +1,13 @@
-package software.nofrills.taffy.core.encode;
+package software.nofrills.taffy.core.steps;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import software.nofrills.taffy.core.Base64Charset;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Step;
 
-public class Base64 implements Step {
-    public enum Charset {
-        @JsonProperty("std-padded") STD_PADDED,
-        @JsonProperty("std-raw") STD_RAW,
-        @JsonProperty("url-padded") URL_PADDED,
-        @JsonProperty("url-raw") URL_RAW,
-    }
+public class EncodeBase64 implements Step {
+    private final Base64Charset charset;
 
-    private final Charset charset;
-
-    public Base64(@JsonProperty("charset") Charset charset) {
+    public EncodeBase64(Base64Charset charset) {
         this.charset = charset;
     }
 
