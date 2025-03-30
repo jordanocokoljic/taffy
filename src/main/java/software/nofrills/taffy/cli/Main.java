@@ -32,7 +32,7 @@ public class Main {
                     Step[] recipe = mapper.readValue(p.toFile(), new TypeReference<>() {});
                     recipes.put(FilenameUtils.removeExtension(p.getFileName().toString()), recipe);
                 } catch (IOException e) {
-                    System.err.printf("A fatal error occred when trying to load recipe %s: %s", p, e.getMessage());
+                    System.err.printf("A fatal error occurred when trying to load recipe %s: %s", p, e.getMessage());
                     System.exit(1);
                 }
             });
