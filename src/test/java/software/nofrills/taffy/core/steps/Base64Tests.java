@@ -3,17 +3,18 @@ package software.nofrills.taffy.core.steps;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import software.nofrills.taffy.core.Base64Charset;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.ContextHelper;
+import software.nofrills.taffy.core.StepApplyException;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Base64Tests {
     @ParameterizedTest(name = "{0}")
@@ -38,6 +39,16 @@ public class Base64Tests {
         b64.apply(context);
 
         assertArrayEquals(source(), context.pop());
+    }
+
+    @Test
+    public void decodeThrowsCorrectlyTypedException() {
+        Context context = new Context(null);
+        ContextHelper.pushUTF8(context, "[]");
+
+        DecodeBase64 b64 = new DecodeBase64(Base64Charset.STD_PADDED);
+
+        assertThrows(StepApplyException.class, () -> b64.apply(context));
     }
 
     private static byte[] source() {

@@ -3,6 +3,7 @@ package software.nofrills.taffy.core.steps;
 import software.nofrills.taffy.core.Base64Charset;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Step;
+import software.nofrills.taffy.core.StepApplyException;
 
 import java.util.Base64;
 
@@ -22,6 +23,10 @@ public class DecodeBase64 implements Step {
 
     @Override
     public void apply(Context context) {
-        context.push(decoder().decode(context.pop()));
+        try {
+            context.push(decoder().decode(context.pop()));
+        } catch (IllegalArgumentException e) {
+            throw new StepApplyException(this.getClass(), String.format("unable to decode data: %s", e));
+        }
     }
 }
