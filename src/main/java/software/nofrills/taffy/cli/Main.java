@@ -9,6 +9,7 @@ import software.nofrills.taffy.core.Step;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -31,13 +32,15 @@ public class Main {
                     Step[] recipe = mapper.readValue(p.toFile(), new TypeReference<>() {});
                     recipes.put(FilenameUtils.removeExtension(p.getFileName().toString()), recipe);
                 } catch (IOException e) {
-                    // todo(jordan): Provide a better message here
-                    throw new RuntimeException(e);
+                    System.err.printf("A fatal error occred when trying to load recipe %s: %s", p, e.getMessage());
+                    System.exit(1);
                 }
             });
-        } catch (IOException e) {
-            // todo(jordan): Provide a better message here
-            throw new RuntimeException(e);
+        }
+        catch (NoSuchFileException ignored) {}
+        catch (IOException e) {
+            System.err.printf("A fatal error occurred when trying to load local recipes: %s", e);
+            System.exit(1);
         }
 
         String runRecipe = args[0];
