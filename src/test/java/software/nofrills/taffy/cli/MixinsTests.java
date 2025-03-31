@@ -115,6 +115,15 @@ public class MixinsTests {
                     "do": "decode:hex"
                 }
                 """
+            ),
+            Arguments.of(
+                RandomBytes.class,
+                """
+                {
+                    "do": "rand:bytes",
+                    "num": 32
+                }
+                """
             )
         );
     }
