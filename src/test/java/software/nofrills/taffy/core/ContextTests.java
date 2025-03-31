@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ContextTests {
     @Test
     public void pushAndPopOperateAsExpected() {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         context.push("Hello".getBytes(StandardCharsets.UTF_8));
         context.push("World".getBytes(StandardCharsets.UTF_8));
 

@@ -8,8 +8,7 @@ import java.nio.charset.StandardCharsets;
 public class OutStdout implements Step {
     @Override
     public void apply(Context context) {
-        try (var out = context.out()) {
-            out.println(new String(context.pop(), StandardCharsets.UTF_8));
-        }
+        String str = new String(context.pop(), StandardCharsets.UTF_8);
+        context.out.println(str);
     }
 }

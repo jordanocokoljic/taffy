@@ -15,7 +15,7 @@ public class HexTests {
 
     @Test
     public void encodePushesCorrectValueToContext() {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         context.push(plain.getBytes(StandardCharsets.UTF_8));
 
         EncodeHex hex = new EncodeHex();
@@ -26,7 +26,7 @@ public class HexTests {
 
     @Test
     public void decodePushesCorrectValueToContext() {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         context.push(encoded);
 
         DecodeHex hex = new DecodeHex();
@@ -37,7 +37,7 @@ public class HexTests {
 
     @Test
     public void decodeThrowsCorrectlyTypedException() {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         ContextHelper.pushUTF8(context, "ZZZZ");
 
         DecodeHex hex = new DecodeHex();

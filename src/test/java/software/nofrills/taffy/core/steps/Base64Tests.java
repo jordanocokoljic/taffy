@@ -19,7 +19,7 @@ public class Base64Tests {
     @ParameterizedTest(name = "{0}")
     @MethodSource("testCases")
     public void encodePushesCorrectValueToContext(Base64Charset charset, String expected) {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         context.push(source());
 
         EncodeBase64 b64 = new EncodeBase64(charset);
@@ -31,7 +31,7 @@ public class Base64Tests {
     @ParameterizedTest(name = "{0}")
     @MethodSource("testCases")
     public void decodePushesCorrectValueToContext(Base64Charset charset, String raw) {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         ContextHelper.pushUTF8(context, raw);
 
         DecodeBase64 b64 = new DecodeBase64(charset);
@@ -42,7 +42,7 @@ public class Base64Tests {
 
     @Test
     public void decodeThrowsCorrectlyTypedException() {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         ContextHelper.pushUTF8(context, "[]");
 
         DecodeBase64 b64 = new DecodeBase64(Base64Charset.STD_PADDED);

@@ -39,7 +39,7 @@ public class Main {
         }
 
         Runner runner = new Runner(matched);
-        boolean ok = runner.run(System.out, System.err);
+        boolean ok = runner.run(System.in, System.out, System.err);
 
         if (!ok) {
             System.exit(1);

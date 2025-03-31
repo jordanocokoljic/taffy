@@ -1,5 +1,6 @@
 package software.nofrills.taffy.core;
 
+import java.io.InputStream;
 import java.io.PrintStream;
 
 public class Runner {
@@ -9,8 +10,8 @@ public class Runner {
         this.steps = steps;
     }
 
-    public boolean run(PrintStream out, PrintStream err) {
-        Context context = new Context(out);
+    public boolean run(InputStream in, PrintStream out, PrintStream err) {
+        Context context = new Context(in, out);
 
         for (var i = 0; i < steps.length; i++) {
             try {

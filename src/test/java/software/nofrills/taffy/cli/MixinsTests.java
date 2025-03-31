@@ -66,6 +66,15 @@ public class MixinsTests {
                 """
             ),
             Arguments.of(
+                InStdin.class,
+                """
+                {
+                    "do": "in:stdin",
+                    "prompt": "Enter value"
+                }
+                """
+            ),
+            Arguments.of(
                 OutStdout.class,
                 """
                 {

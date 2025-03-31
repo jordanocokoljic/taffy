@@ -23,23 +23,25 @@ final class Mixins {
 
         mapper.addMixIn(Step.class, StepMixin.class);
         mapper.addMixIn(InText.class, InTextMixin.class);
+        mapper.addMixIn(InStdin.class, InStdinMixin.class);
         mapper.addMixIn(EncodeBase64.class, EncodeBase64Mixin.class);
         mapper.addMixIn(DecodeBase64.class, DecodeBase64Mixin.class);
     }
 }
 
 @JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "do"
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "do"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(name = "in:text", value = InText.class),
-        @JsonSubTypes.Type(name = "out:stdout", value = OutStdout.class),
-        @JsonSubTypes.Type(name = "encode:base64", value = EncodeBase64.class),
-        @JsonSubTypes.Type(name = "encode:hex", value = EncodeHex.class),
-        @JsonSubTypes.Type(name = "decode:base64", value = DecodeBase64.class),
-        @JsonSubTypes.Type(name = "decode:hex", value = DecodeHex.class)
+    @JsonSubTypes.Type(name = "in:text", value = InText.class),
+    @JsonSubTypes.Type(name = "in:stdin", value = InStdin.class),
+    @JsonSubTypes.Type(name = "out:stdout", value = OutStdout.class),
+    @JsonSubTypes.Type(name = "encode:base64", value = EncodeBase64.class),
+    @JsonSubTypes.Type(name = "encode:hex", value = EncodeHex.class),
+    @JsonSubTypes.Type(name = "decode:base64", value = DecodeBase64.class),
+    @JsonSubTypes.Type(name = "decode:hex", value = DecodeHex.class)
 })
 interface StepMixin {
 }
@@ -62,6 +64,12 @@ class Base64CharsetDeserializer extends JsonDeserializer<Base64Charset> {
 abstract class InTextMixin extends InText {
     public InTextMixin(@JsonProperty("text") String text) {
         super(text);
+    }
+}
+
+abstract class InStdinMixin extends InStdin {
+    public InStdinMixin(@JsonProperty("prompt") String prompt) {
+        super(prompt);
     }
 }
 

@@ -14,7 +14,7 @@ public class OutStdoutTests {
     public void applyWritesToContextOut() {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(bytes);
-        Context context = new Context(out);
+        Context context = new Context(null, out);
 
         String message = "Hello, world";
         context.push(message.getBytes(StandardCharsets.UTF_8));

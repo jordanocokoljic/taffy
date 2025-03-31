@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class InTextTests {
     @Test
     public void applyPushesToStack() {
-        Context context = new Context(null);
+        Context context = new Context(null, null);
         InText text = new InText("Hello, world");
 
         text.apply(context);
