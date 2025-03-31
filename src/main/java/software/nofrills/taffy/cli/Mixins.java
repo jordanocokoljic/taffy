@@ -27,6 +27,7 @@ final class Mixins {
         mapper.addMixIn(EncodeBase64.class, EncodeBase64Mixin.class);
         mapper.addMixIn(DecodeBase64.class, DecodeBase64Mixin.class);
         mapper.addMixIn(RandomBytes.class, RandomBytesMixin.class);
+        mapper.addMixIn(HmacSHA256.class, HmacSHA256Mixin.class);
     }
 }
 
@@ -43,7 +44,8 @@ final class Mixins {
     @JsonSubTypes.Type(name = "encode:hex", value = EncodeHex.class),
     @JsonSubTypes.Type(name = "decode:base64", value = DecodeBase64.class),
     @JsonSubTypes.Type(name = "decode:hex", value = DecodeHex.class),
-    @JsonSubTypes.Type(name = "rand:bytes", value = RandomBytes.class)
+    @JsonSubTypes.Type(name = "rand:bytes", value = RandomBytes.class),
+    @JsonSubTypes.Type(name = "hmac:sha256", value = HmacSHA256.class)
 })
 interface StepMixin {
 }
@@ -90,5 +92,12 @@ abstract class DecodeBase64Mixin extends DecodeBase64 {
 abstract class RandomBytesMixin extends RandomBytes {
     public RandomBytesMixin(@JsonProperty("num") int numBytes) {
         super(numBytes);
+    }
+}
+
+abstract class HmacSHA256Mixin extends HmacSHA256 {
+
+    public HmacSHA256Mixin(@JsonProperty("key") String key) {
+        super(key);
     }
 }

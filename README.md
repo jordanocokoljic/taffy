@@ -31,14 +31,15 @@ the string `"Hello, world"`.
 
 Taffy supports a variety of steps, each of which will push or pop values on and off the stack.
 
-| Step            | Fields                                                    | Purpose                                                                                                                    |
-|-----------------|-----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| `in:text`       | `text: string`                                            | Pushes the provided text onto the stack.                                                                                   |
-| `in:stdin`      | `prompt: string`                                          | Prompts the user on the command line, and pushes the provided input onto the stack.                                        |
-| `encode:hex`    | None                                                      | Takes the value on the top of the stack, encodes it as a hexadecimal string, pushing the result back onto the stack.       |
-| `encode:base64` | `charset: std-padded \| std-raw \| url-padded \| url-raw` | Takes the value on the top of the stack, encodes it with the given base64 alphabet, pushing the result back onto the stack |
-| `rand:bytes`    | `num: number`                                             | Generates the user specified number of cryptographically secure random bytes and pushes it onto the stack.                 |
-| `out:stdout`    | None                                                      | Takes the value on the top of the stack, writing it to standard out.                                                       |
+| Step            | Fields                                                    | Purpose                                                                                                                     |
+|-----------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `in:text`       | `text: string`                                            | Pushes the provided text onto the stack.                                                                                    |
+| `in:stdin`      | `prompt: string`                                          | Prompts the user on the command line, and pushes the provided input onto the stack.                                         |
+| `encode:hex`    | None                                                      | Takes the value on the top of the stack, encodes it as a hexadecimal string, pushing the result back onto the stack.        |
+| `encode:base64` | `charset: std-padded \| std-raw \| url-padded \| url-raw` | Takes the value on the top of the stack, encodes it with the given base64 alphabet, pushing the result back onto the stack. |
+| `rand:bytes`    | `num: number`                                             | Generates the user specified number of cryptographically secure random bytes and pushes it onto the stack.                  |
+| `hmac:sha256`   | `key: string`                                             | Takes the value on the top of the stack, generates the HMAC using the SHA256 hashing function with the provided key.        |
+| `out:stdout`    | None                                                      | Takes the value on the top of the stack, writing it to standard out.                                                        |
 
 ## Building
 

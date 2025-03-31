@@ -124,6 +124,15 @@ public class MixinsTests {
                     "num": 32
                 }
                 """
+            ),
+            Arguments.of(
+                HmacSHA256.class,
+                """
+                {
+                    "do": "hmac:sha256",
+                    "key": "1bcf8d9af805a3e331a44853308f917d079bfb5fcb32313724c0ba1a6e5780f5"
+                }
+                """
             )
         );
     }
