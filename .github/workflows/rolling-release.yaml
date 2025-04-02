@@ -15,5 +15,5 @@ jobs:
       - run: cp target/*-jar-with-dependencies.jar dist/taffy.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: "Taffy rolling release"
+          name: "Taffy Rolling Release"
           path: dist
