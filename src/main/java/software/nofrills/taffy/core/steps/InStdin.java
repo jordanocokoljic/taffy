@@ -21,7 +21,7 @@ public class InStdin implements Step {
 
     @Override
     public void apply(Context context) {
-        context.out.printf("%s ", prompt);
+        context.out.print(prompt);
         BufferedReader reader = new BufferedReader(new InputStreamReader(context.in));
         String input;
 

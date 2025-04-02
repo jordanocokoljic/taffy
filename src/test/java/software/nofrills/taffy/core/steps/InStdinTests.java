@@ -26,7 +26,7 @@ public class InStdinTests {
 
         inStdin.apply(context);
 
-        assertEquals("Prompt: ", outputBytes.toString(StandardCharsets.UTF_8));
+        assertEquals("Prompt:", outputBytes.toString(StandardCharsets.UTF_8));
         assertEquals("Hello, world", ContextHelper.popUTF8(context));
     }
 
