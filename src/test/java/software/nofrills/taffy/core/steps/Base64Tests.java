@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Base64Tests {
     @ParameterizedTest(name = "{0}")
     @MethodSource("testCases")
-    public void encodePushesCorrectValueToContext(Base64Charset charset, String expected) {
+    public void encodePushesCorrectValueToContext(String charset, String expected) {
         Context context = new Context(null, null);
         context.push(source());
 
@@ -27,7 +27,7 @@ public class Base64Tests {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("testCases")
-    public void decodePushesCorrectValueToContext(Base64Charset charset, String raw) {
+    public void decodePushesCorrectValueToContext(String charset, String raw) {
         Context context = new Context(null, null);
         ContextHelper.pushUTF8(context, raw);
 
@@ -42,7 +42,7 @@ public class Base64Tests {
         Context context = new Context(null, null);
         ContextHelper.pushUTF8(context, "[]");
 
-        DecodeBase64 b64 = new DecodeBase64(Base64Charset.STD_PADDED);
+        DecodeBase64 b64 = new DecodeBase64("std-padded");
 
         assertThrows(StepApplicationException.class, () -> b64.apply(context));
     }
@@ -54,8 +54,20 @@ public class Base64Tests {
     }
 
     @Test
+    public void encodeThrowsCorrectErrorIfCharsetIsInvalid() {
+        var e = assertThrows(StepConstructionException.class, () -> new EncodeBase64("not-real"));
+        assertEquals(EncodeBase64.class, e.getStep());
+    }
+
+    @Test
     public void decodeThrowsCorrectErrorIfCharsetIsNull() {
         var e = assertThrows(StepConstructionException.class, () -> new DecodeBase64(null));
+        assertEquals(DecodeBase64.class, e.getStep());
+    }
+
+    @Test
+    public void decodeThrowsCorrectErrorIfCharsetIsInvalid() {
+        var e = assertThrows(StepConstructionException.class, () -> new DecodeBase64("not-real"));
         assertEquals(DecodeBase64.class, e.getStep());
     }
 
@@ -69,10 +81,10 @@ public class Base64Tests {
 
     private static Stream<Arguments> testCases() {
         return Stream.of(
-            Arguments.of(Base64Charset.STD_PADDED, "alphabet+w=="),
-            Arguments.of(Base64Charset.STD_RAW, "alphabet+w"),
-            Arguments.of(Base64Charset.URL_PADDED, "alphabet-w=="),
-            Arguments.of(Base64Charset.URL_RAW, "alphabet-w")
+            Arguments.of("std-padded", "alphabet+w=="),
+            Arguments.of("std-raw", "alphabet+w"),
+            Arguments.of("url-padded", "alphabet-w=="),
+            Arguments.of("url-raw", "alphabet-w")
         );
     }
 }
