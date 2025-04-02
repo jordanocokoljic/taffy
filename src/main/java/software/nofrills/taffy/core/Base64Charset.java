@@ -5,4 +5,6 @@ public enum Base64Charset {
     STD_RAW,
     URL_PADDED,
     URL_RAW,
+
+
 }

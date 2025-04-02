@@ -3,11 +3,16 @@ package software.nofrills.taffy.core.steps;
 import software.nofrills.taffy.core.Base64Charset;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Step;
+import software.nofrills.taffy.core.StepConstructionException;
 
 public class EncodeBase64 implements Step {
     private final Base64Charset charset;
 
     public EncodeBase64(Base64Charset charset) {
+        if (charset == null) {
+            throw new StepConstructionException(this.getClass(), "charset cannot be null");
+        }
+
         this.charset = charset;
     }
 

@@ -16,7 +16,7 @@ public class Runner {
         for (var i = 0; i < steps.length; i++) {
             try {
                 steps[i].apply(context);
-            } catch (StepApplyException e) {
+            } catch (StepApplicationException e) {
                 err.printf("An error occurred during step %d: %s%n", i, e.getMessage());
                 return false;
             }

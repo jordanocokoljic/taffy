@@ -4,7 +4,8 @@ import org.apache.commons.codec.binary.Hex;
 import org.junit.jupiter.api.Test;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.ContextHelper;
-import software.nofrills.taffy.core.StepApplyException;
+import software.nofrills.taffy.core.StepApplicationException;
+import software.nofrills.taffy.core.StepConstructionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +29,13 @@ public class HmacSHA256Tests {
 
         HmacSHA256 hmacSHA256 = new HmacSHA256("----");
 
-        Exception e = assertThrows(StepApplyException.class, () -> hmacSHA256.apply(context));
+        Exception e = assertThrows(StepApplicationException.class, () -> hmacSHA256.apply(context));
         assertTrue(e.getMessage().contains("cannot decode key"));
+    }
+
+    @Test
+    public void throwsExceptionIfKeyIsNull() {
+        var e = assertThrows(StepConstructionException.class, () -> new HmacSHA256(null));
+        assertEquals(HmacSHA256.class, e.getStep());
     }
 }

@@ -1,9 +1,6 @@
 package software.nofrills.taffy.core.steps;
 
-import software.nofrills.taffy.core.Base64Charset;
-import software.nofrills.taffy.core.Context;
-import software.nofrills.taffy.core.Step;
-import software.nofrills.taffy.core.StepApplyException;
+import software.nofrills.taffy.core.*;
 
 import java.util.Base64;
 
@@ -11,6 +8,10 @@ public class DecodeBase64 implements Step {
     private final Base64Charset charset;
 
     public DecodeBase64(Base64Charset charset) {
+        if (charset == null) {
+            throw new StepConstructionException(this.getClass(), "charset cannot be null");
+        }
+
         this.charset = charset;
     }
 
@@ -26,7 +27,7 @@ public class DecodeBase64 implements Step {
         try {
             context.push(decoder().decode(context.pop()));
         } catch (IllegalArgumentException e) {
-            throw new StepApplyException(this.getClass(), String.format("unable to decode data: %s", e));
+            throw new StepApplicationException(this.getClass(), String.format("unable to decode data: %s", e));
         }
     }
 }

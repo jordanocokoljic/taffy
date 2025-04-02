@@ -3,7 +3,7 @@ package software.nofrills.taffy.core.steps;
 import org.junit.jupiter.api.Test;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.ContextHelper;
-import software.nofrills.taffy.core.StepApplyException;
+import software.nofrills.taffy.core.StepApplicationException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -42,6 +42,6 @@ public class HexTests {
 
         DecodeHex hex = new DecodeHex();
 
-        assertThrows(StepApplyException.class, () -> hex.apply(context));
+        assertThrows(StepApplicationException.class, () -> hex.apply(context));
     }
 }

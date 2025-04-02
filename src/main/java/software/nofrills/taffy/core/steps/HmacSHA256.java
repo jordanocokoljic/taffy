@@ -4,7 +4,8 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Step;
-import software.nofrills.taffy.core.StepApplyException;
+import software.nofrills.taffy.core.StepApplicationException;
+import software.nofrills.taffy.core.StepConstructionException;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -16,6 +17,10 @@ public class HmacSHA256 implements Step {
     private final String key;
 
     public HmacSHA256(String key) {
+        if (key == null) {
+            throw new StepConstructionException(this.getClass(), "key cannot be null");
+        }
+
         this.key = key;
     }
 
@@ -26,7 +31,7 @@ public class HmacSHA256 implements Step {
         try {
             secretBytes = Hex.decodeHex(key);
         } catch (DecoderException e) {
-            throw new StepApplyException(this.getClass(), "cannot decode key: " + e);
+            throw new StepApplicationException(this.getClass(), "cannot decode key: " + e);
         }
 
         SecretKeySpec secretKeySpec = new SecretKeySpec(secretBytes, algorithm);

@@ -6,10 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import software.nofrills.taffy.core.Base64Charset;
-import software.nofrills.taffy.core.Context;
-import software.nofrills.taffy.core.ContextHelper;
-import software.nofrills.taffy.core.StepApplyException;
+import software.nofrills.taffy.core.*;
 
 import java.util.stream.Stream;
 
@@ -47,7 +44,19 @@ public class Base64Tests {
 
         DecodeBase64 b64 = new DecodeBase64(Base64Charset.STD_PADDED);
 
-        assertThrows(StepApplyException.class, () -> b64.apply(context));
+        assertThrows(StepApplicationException.class, () -> b64.apply(context));
+    }
+
+    @Test
+    public void encodeThrowsCorrectErrorIfCharsetIsNull() {
+        var e = assertThrows(StepConstructionException.class, () -> new EncodeBase64(null));
+        assertEquals(EncodeBase64.class, e.getStep());
+    }
+
+    @Test
+    public void decodeThrowsCorrectErrorIfCharsetIsNull() {
+        var e = assertThrows(StepConstructionException.class, () -> new DecodeBase64(null));
+        assertEquals(DecodeBase64.class, e.getStep());
     }
 
     private static byte[] source() {
