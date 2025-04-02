@@ -33,7 +33,8 @@ final class Mixins {
     @JsonSubTypes.Type(name = "decode:base64", value = DecodeBase64.class),
     @JsonSubTypes.Type(name = "decode:hex", value = DecodeHex.class),
     @JsonSubTypes.Type(name = "rand:bytes", value = RandomBytes.class),
-    @JsonSubTypes.Type(name = "hmac:sha256", value = HmacSHA256.class)
+    @JsonSubTypes.Type(name = "hmac:sha256", value = HmacSHA256.class),
+    @JsonSubTypes.Type(name = "ctx:duplicate", value = CtxDuplicate.class)
 })
 interface StepMixin {
 }
