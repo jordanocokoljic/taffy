@@ -11,7 +11,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'microsoft'
-      - run: mvn mvn --batch-mode --update-snapshots verify
+      - run: mvn --batch-mode --update-snapshots verify
       - run: mkdir staging && cp target/*-jar-with-dependencies.jar staging
       - uses: actions/upload-artifact@v4
         with:
