@@ -1,2 +1,2 @@
 @echo off
-java -jar "taffy.jar" %*
+java -jar "%~dp0taffy.jar" %*
