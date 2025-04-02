@@ -1,46 +1,63 @@
 # Taffy
-
 Taffy is a stack based text manipulation tool.
 
 ## Recipes
+`taffy` executes recipes, which are small lists of simple stack based
+instructions (referred to as steps) written in YAML.
 
-Taffy works by executing `recipes` which are a set of instructions (each of which is referred to as a `step`).
+Recipes can be one of two types:
 
-Recipes are written in YAML, and can be either:
+- **Local**, stored in the `.taffy` subdirectory of the working directory. 
+- Or **global**, stored in:
+  - `%APPDATA%\.taffy` on Windows
+  - `$XDG_CONFIG_HOME/.taffy` or `$HOME/.taffy` on Unix like systems.
 
-- **Local**, meaning they are stored under `.taffy`, within the calling directory.
-- **Global**, meaning they are stored in:
-    - `%APPDATA/.taffy` on Windows
-    - `$XDG_CONFIG_HOME/.taffy` or `$HOME/.taffy` on Unix like operating systems
+Documentation on the steps supported by Taffy can be found in `STEPS.md`.
 
-Here is an example recipe:
+## Install
+The nightly (or Rolling Release) can be downloaded via the Actions tab,
+provided that it has been less than 90 days since the last workflow run.
 
-```
-- do: in:text
-  text: "Hello, world"
-  
-- do: encode:hex
+1. Go to [Actions → Rolling Release](https://github.com/jordanocokoljic/taffy/actions/workflows/rolling-release.yaml).
+2. Select the most recent run (that is less than 90 days old).
+3. Download the artifact from the 'Artifacts' section at the bottom of the page.
+4. Copy `taffy.jar` and `taffy` (on Unix like systems) or `taffy.bat` (on
+   Windows) into a folder in `PATH`.
+
+Proper GitHub integrated releases will be coming soon.
+
+
+## Usage
+To use Taffy, there must be at least one local or global recipe. Here is an
+example recipe:
+
+```yaml
+# File ./taffy/echo.yaml
+
+- do: in:stdin
+  prompt: "Message: "
 
 - do: out:stdout
 ```
 
-Running this recipe results in `48656c6c6f2c20776f726c64` being printed to standard out - the hex representation of
-the string `"Hello, world"`.
+This recipe will prompt the user for some input, and then write that input to
+standard out unmodified.
 
-## Steps
+To execute this recipe, use:
 
-Taffy supports a variety of steps, each of which will push or pop values on and off the stack.
+```yaml
+taffy echo
+```
 
-| Step            | Fields                                                    | Purpose                                                                                                                     |
-|-----------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| `in:text`       | `text: string`                                            | Pushes the provided text onto the stack.                                                                                    |
-| `in:stdin`      | `prompt: string`                                          | Prompts the user on the command line, and pushes the provided input onto the stack.                                         |
-| `encode:hex`    | None                                                      | Takes the value on the top of the stack, encodes it as a hexadecimal string, pushing the result back onto the stack.        |
-| `encode:base64` | `charset: std-padded \| std-raw \| url-padded \| url-raw` | Takes the value on the top of the stack, encodes it with the given base64 alphabet, pushing the result back onto the stack. |
-| `rand:bytes`    | `num: number`                                             | Generates the user specified number of cryptographically secure random bytes and pushes it onto the stack.                  |
-| `hmac:sha256`   | `key: string`                                             | Takes the value on the top of the stack, generates the HMAC using the SHA256 hashing function with the provided key.        |
-| `out:stdout`    | None                                                      | Takes the value on the top of the stack, writing it to standard out.                                                        |
+From either the parent of the `.taffy` directory if it has been saved as a
+local recipe, or anywhere if it has been saved as a global recipe.
+
+Note, recipes are identified by filename (without extension), and local recipes
+will always be searched before global recipes, therefore if you have both a
+local and  global `echo.yaml` recipe, Taffy will always execute the local
+version.
 
 ## Building
-
-To build Taffy locally, clone the repository, and run `mvn package`.
+To build Taffy locally, clone the repository, and run `mvn verify`, the built
+`.jar` files will be contained within the `target` directory. The distribution
+version will be named `taffy-{VERSION}-jar-with-dependencies.jar`.
