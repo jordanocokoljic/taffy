@@ -12,6 +12,7 @@ final class Mixins {
         mapper.addMixIn(Step.class, StepMixin.class);
         mapper.addMixIn(InText.class, InTextMixin.class);
         mapper.addMixIn(InStdin.class, InStdinMixin.class);
+        mapper.addMixIn(OutStdout.class, OutStdoutMixin.class);
         mapper.addMixIn(EncodeBase64.class, EncodeBase64Mixin.class);
         mapper.addMixIn(DecodeBase64.class, DecodeBase64Mixin.class);
         mapper.addMixIn(RandomBytes.class, RandomBytesMixin.class);
@@ -47,6 +48,12 @@ abstract class InTextMixin extends InText {
 
 abstract class InStdinMixin extends InStdin {
     public InStdinMixin(@JsonProperty("prompt") String prompt) {
+        super(prompt);
+    }
+}
+
+abstract class OutStdoutMixin extends OutStdout {
+    public OutStdoutMixin(@JsonProperty("prompt") String prompt) {
         super(prompt);
     }
 }
