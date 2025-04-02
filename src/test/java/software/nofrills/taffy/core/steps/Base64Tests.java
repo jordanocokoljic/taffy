@@ -51,24 +51,28 @@ public class Base64Tests {
     public void encodeThrowsCorrectErrorIfCharsetIsNull() {
         var e = assertThrows(StepConstructionException.class, () -> new EncodeBase64(null));
         assertEquals(EncodeBase64.class, e.getStep());
+        assertTrue(e.getMessage().contains("charset cannot be null"));
     }
 
     @Test
     public void encodeThrowsCorrectErrorIfCharsetIsInvalid() {
         var e = assertThrows(StepConstructionException.class, () -> new EncodeBase64("not-real"));
         assertEquals(EncodeBase64.class, e.getStep());
+        assertTrue(e.getMessage().contains("charset is invalid"));
     }
 
     @Test
     public void decodeThrowsCorrectErrorIfCharsetIsNull() {
         var e = assertThrows(StepConstructionException.class, () -> new DecodeBase64(null));
         assertEquals(DecodeBase64.class, e.getStep());
+        assertTrue(e.getMessage().contains("charset cannot be null"));
     }
 
     @Test
     public void decodeThrowsCorrectErrorIfCharsetIsInvalid() {
         var e = assertThrows(StepConstructionException.class, () -> new DecodeBase64("not-real"));
         assertEquals(DecodeBase64.class, e.getStep());
+        assertTrue(e.getMessage().contains("charset is invalid"));
     }
 
     private static byte[] source() {

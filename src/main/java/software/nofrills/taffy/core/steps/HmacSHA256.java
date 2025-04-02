@@ -4,7 +4,6 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.Step;
-import software.nofrills.taffy.core.StepApplicationException;
 import software.nofrills.taffy.core.StepConstructionException;
 
 import javax.crypto.Mac;
@@ -14,45 +13,40 @@ import java.security.NoSuchAlgorithmException;
 
 public class HmacSHA256 implements Step {
     private static final String algorithm = "HmacSHA256";
-    private final String key;
+    private final Mac mac;
 
     public HmacSHA256(String key) {
         if (key == null) {
             throw new StepConstructionException(this.getClass(), "key cannot be null");
         }
 
-        this.key = key;
-    }
-
-    @Override
-    public void apply(Context context) {
         byte[] secretBytes;
 
         try {
             secretBytes = Hex.decodeHex(key);
         } catch (DecoderException e) {
-            throw new StepApplicationException(this.getClass(), "cannot decode key: " + e);
+            throw new StepConstructionException(this.getClass(), "could not decode key: " + e);
         }
 
         SecretKeySpec secretKeySpec = new SecretKeySpec(secretBytes, algorithm);
 
-        Mac mac = getInitializedMac(secretKeySpec);
-        context.push(mac.doFinal(context.pop()));
+        try {
+            this.mac = Mac.getInstance(algorithm);
+            mac.init(secretKeySpec);
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+            // As far as I can tell, these conditions cannot happen because:
+            //  - The algorithm "HmacSHA256" is a listed algorithm in the Java Security specification.
+            //  - An InvalidKeyException is only returned if the provided key is null, which would have
+            //    been caught earlier.
+            //
+            // But just in case.
+
+            throw new StepConstructionException(this.getClass(), "unable to initialize MAC: " + e);
+        }
     }
 
-    private static Mac getInitializedMac(SecretKeySpec secretKeySpec) {
-        Mac mac = null;
-
-        try {
-            mac = Mac.getInstance(algorithm);
-            mac.init(secretKeySpec);
-        } catch (NoSuchAlgorithmException | InvalidKeyException ignored) {
-            // As far as I can tell, neither of these could actually happen:
-            //  - The algorithm "HmacSHA256" is a listed algorithm, and is hardcoded here.
-            //  - InvalidKeyException only gets returned if the provided secret key is null,
-            //    but this would have caused a failure much earlier.
-        }
-
-        return mac;
+    @Override
+    public void apply(Context context) {
+        context.push(mac.doFinal(context.pop()));
     }
 }

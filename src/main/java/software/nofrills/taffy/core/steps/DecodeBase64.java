@@ -15,7 +15,7 @@ public class DecodeBase64 implements Step {
         this.decoder = switch (charset) {
             case "std-padded", "std-raw" -> Base64.getDecoder();
             case "url-padded", "url-raw" -> Base64.getUrlDecoder();
-            default -> throw new StepConstructionException(this.getClass(), String.format("unrecognized charset: %s", charset));
+            default -> throw new StepConstructionException(this.getClass(), String.format("charset is invalid: %s", charset));
         };
     }
 

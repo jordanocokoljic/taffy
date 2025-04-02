@@ -5,8 +5,7 @@ import software.nofrills.taffy.core.Context;
 import software.nofrills.taffy.core.ContextHelper;
 import software.nofrills.taffy.core.StepConstructionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InTextTests {
     @Test
@@ -23,5 +22,6 @@ public class InTextTests {
     public void throwsCorrectErrorIfTextIsNull() {
         var e = assertThrows(StepConstructionException.class, () -> new InText(null));
         assertEquals(InText.class, e.getStep());
+        assertTrue(e.getMessage().contains("text cannot be null"));
     }
 }

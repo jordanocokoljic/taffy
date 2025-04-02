@@ -34,5 +34,6 @@ public class InStdinTests {
     public void throwsCorrectErrorIfTextIsNull() {
         var e = assertThrows(StepConstructionException.class, () -> new InStdin(null));
         assertEquals(InStdin.class, e.getStep());
+        assertTrue(e.getMessage().contains("prompt cannot be null"));
     }
 }

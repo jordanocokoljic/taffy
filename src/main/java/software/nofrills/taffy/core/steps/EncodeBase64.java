@@ -19,7 +19,7 @@ public class EncodeBase64 implements Step {
             case "std-raw" -> Base64.getEncoder().withoutPadding();
             case "url-padded" -> Base64.getUrlEncoder();
             case "url-raw" -> Base64.getUrlEncoder().withoutPadding();
-            default -> throw new StepConstructionException(this.getClass(), String.format("unrecognized charset: %s", charset));
+            default -> throw new StepConstructionException(this.getClass(), String.format("charset is invalid: %s", charset));
         };
     }
 
