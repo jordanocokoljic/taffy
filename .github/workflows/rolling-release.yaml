@@ -1,4 +1,4 @@
-name: "Compile Taffy"
+name: "Rolling Release"
 on: [push]
 jobs:
   Compile:
@@ -15,5 +15,5 @@ jobs:
       - run: cp target/*-jar-with-dependencies.jar dist/taffy.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: "Taffy Rolling Release"
+          name: "taffy-${{ github.sha }}"
           path: dist
