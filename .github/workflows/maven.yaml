@@ -12,8 +12,8 @@ jobs:
           java-version: '21'
           distribution: 'microsoft'
       - run: mvn --batch-mode --update-snapshots verify
-      - run: mkdir staging && cp target/*-jar-with-dependencies.jar staging
+      - run: cp target/*-jar-with-dependencies.jar dist/taffy.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: "Packaging"
-          path: staging
+          name: "Taffy rolling release"
+          path: dist
